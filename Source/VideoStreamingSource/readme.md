@@ -56,4 +56,4 @@ sudo cp -R Video_Streaming_Platform/* /var/www/html/
 If everything went fine, you should now be able to access the website via your EC2 instance's public IP.
 
 ### Credits
-I've pulled the rle based authorization angular template from `[Jason Watmore's Github](https://github.com/cornflourblue/angular-10-role-based-authorization-example)`. I've used it as a base to show the more "realistic" approach of a streaming website where an "admin" can upload a video and a "user" can only watch the videos. Everything else related to file upload, AWS connections etc. are the things I've implemented. Not the cleanest code, I know, but it works!
+I've pulled the rle based authorization angular template from [`Jason Watmore's Github`](https://github.com/cornflourblue/angular-10-role-based-authorization-example). I've used it as a base to show the more "realistic" approach of a streaming website where an "admin" can upload a video and a "user" can only watch the videos. Everything else related to file upload, AWS connections etc. are the things I've implemented. Not the cleanest code, I know, but it works!
