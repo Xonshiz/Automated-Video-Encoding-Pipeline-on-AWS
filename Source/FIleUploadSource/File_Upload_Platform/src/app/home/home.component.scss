@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+	--color-greyBg: #f9f9f9;
+	--color-grey: #e5e5e5;
+	--color-greyLight: #e5e5e5a8;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	font-family: Roboto;
+}
+
+i {
+	font-style: normal;
+}
+
+.searchBar {
+	display: flex;
+	justify-content: space-between;
+	padding: 15px;
+	align-items: center;
+	height: 70px;
+	position: sticky;
+	top: 0;
+	background: white;
+	i {
+		padding: 0 7.5px;
+	}
+	.logo {
+		display: flex;
+		align-items: center;
+		img {
+			width: 100px;
+			margin-left: 15px;
+		}
+	}
+	.search {
+		form {
+			border: 1px solid #ddd;
+			height: 35px;
+		}
+		input,
+		button {
+			border-radius: 0;
+			border: none;
+			height: 100%;
+			margin: 0;
+			padding: 0;
+		}
+		input {
+			width: 500px;
+		}
+	}
+}
+
+.mainBody {
+	height: calc(100vh - 70px);
+	display: flex;
+	overflow: hidden;
+}
+
+.categories {
+	width: 270px;
+	height: 100%;
+	overflow-y: scroll;
+	.categoriesSection {
+		display: flex;
+		flex-direction: column;
+		border-bottom: 1px solid var(--color-greyLight);
+		padding: 15px 0;
+		h3 {
+			font-size: 14px;
+			text-transform: uppercase;
+			margin: 0 25px 10px;
+		}
+	}
+	.category {
+		width: 100%;
+		display: flex;
+		padding: 12.5px 25px;
+		align-items: center;
+		cursor: pointer;
+		&.active {
+			background: var(--color-grey);
+			i {
+				color: red;
+			}
+		}
+		span {
+			font-size: 14px;
+		}
+		&:hover {
+			background: var(--color-greyLight);
+		}
+		i {
+			margin-right: 25px;
+		}
+	}
+}
+
+.videos {
+	background: var(--color-greyBg);
+	height: 100%;
+	width: 100%;
+	padding: 15px 25px;
+	overflow-y: scroll;
+	.videosGrid {
+		display: flex;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		.video {
+			width: calc(25% - 10px);
+			margin-bottom: 40px;
+			.thumbnail {
+				width: 100%;
+				height: 170px;
+				img {
+					height: 100%;
+					object-fit: cover;
+					width: 100%;
+				}
+			}
+			.author {
+				height: 40px;
+				width: 40px;
+				border-radius: 50%;
+				overflow: hidden;
+				margin-right: 10px;
+				img {
+					height: 100%;
+					object-fit: cover;
+					width: 100%;
+				}
+			}
+			.details {
+				display: flex;
+				padding-top: 10px;
+				.text {
+					display: flex;
+					flex-direction: column;
+					h3 {
+						margin: 0;
+						font-weight: 500;
+						font-size: 16px;
+					}
+					a {
+						color: inherit;
+						text-decoration: none;
+					}
+					a,
+					span {
+						font-size: 14px;
+						margin-top: 5px;
+					}
+				}
+			}
+		}
+	}
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.active, .collapsible:hover {
+	background-color: #ccc;
+  }
+  
+  /* Style the collapsible content. Note: hidden by default */
+  .collapsiblePanel {
+	padding: 0 18px;
+	// overflow: hidden;
+	overflow: scroll;
+	width: 100%;
+	background-color: #f1f1f1;
+  }

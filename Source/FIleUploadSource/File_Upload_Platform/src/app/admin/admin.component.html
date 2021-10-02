@@ -1,0 +1,24 @@
+﻿<div class="card mt-4">
+    <h4 class="card-header">Admin</h4>
+    <label *ngIf="errorMessage" style="color:red">
+        <h5>{{errorMessage}}</h5>
+        <br />
+        <br />
+    </label>
+    <div class="card-body">
+        <label class="btn btn-default">
+            <input type="file" accept=".mp4,.flv,.mkv" (change)="selectFile($event)">
+        </label>
+        <br />
+        <label>User Email (to receive notification) *: </label>
+        <input #user_email_field type="email" placeholder="Email">
+        <br />
+        <label>Bucket Name *: </label>
+        <input #bucket_name_field type="text" placeholder="Name of Bucket">
+        <br />
+        <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+    </div>
+    <label>
+        {{fileUploadMessage}}
+    </label>
+</div>

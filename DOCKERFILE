@@ -1,0 +1,22 @@
+FROM amazonlinux:latest
+RUN yum -y install unzip aws-cli
+RUN yum -y install python3
+RUN yum install python3-pip -y
+RUN pip3 install boto3
+RUN pip3 install ffmpy
+ADD encoding_script.py /usr/local/bin/encoding_script.py
+RUN chmod +x /usr/local/bin/encoding_script.py
+RUN yum -y upgrade -qq && yum -y install \
+      wget \
+      tar \
+      xz
+ADD ffmpeg-release-arm64-static.tar.xz /usr/local/bin/ffmpeg-release-arm64-static.tar.xz
+RUN cd /usr/local/bin/ffmpeg-release-arm64-static.tar.xz/ffmpeg-4.4-arm64-static && echo $(ls)
+RUN cp /usr/local/bin/ffmpeg-release-arm64-static.tar.xz/ffmpeg-4.4-arm64-static/ffmpeg /usr/local/bin
+RUN cp /usr/local/bin/ffmpeg-release-arm64-static.tar.xz/ffmpeg-4.4-arm64-static/ffprobe /usr/local/bin
+RUN cp /usr/local/bin/ffmpeg-release-arm64-static.tar.xz/ffmpeg-4.4-arm64-static/qt-faststart /usr/local/bin
+RUN rm -rf ffmpeg-release-arm64-static.tar.xz
+RUN ffmpeg -h
+WORKDIR /tmp
+USER nobody
+ENTRYPOINT ["/usr/local/bin/encoding_script.py"]

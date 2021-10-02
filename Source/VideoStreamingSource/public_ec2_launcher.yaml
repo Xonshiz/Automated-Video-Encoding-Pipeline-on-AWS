@@ -1,0 +1,94 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Metadata:
+    Generator: "former2"
+Description: ""
+Resources:
+    EC2SecurityGroup:
+        Type: "AWS::EC2::SecurityGroup"
+        Properties:
+            GroupDescription: "launch-wizard-3"
+            GroupName: "angular-sg"
+            VpcId: "vpc-4e29cf37"
+            SecurityGroupIngress: 
+              - CidrIp: "0.0.0.0/0"
+                Description: ""
+                FromPort: 22
+                IpProtocol: "tcp"
+                ToPort: 22
+              - CidrIp: "0.0.0.0/0"
+                Description: ""
+                FromPort: 80
+                IpProtocol: "tcp"
+                ToPort: 80
+              - CidrIp: "0.0.0.0/0"
+                Description: ""
+                FromPort: 443
+                IpProtocol: "tcp"
+                ToPort: 443
+            SecurityGroupEgress: 
+              - CidrIp: "0.0.0.0/0"
+                IpProtocol: "-1"
+
+    EC2Instance:
+        Type: "AWS::EC2::Instance"
+        Properties:
+            ImageId: "ami-029c64b3c205e6cce"
+            InstanceType: "c6g.medium"
+            IamInstanceProfile: !Ref ECSInstanceProfile
+            KeyName: "EncodingJobKeyPairEC2"
+            AvailabilityZone: !Sub "${AWS::Region}c"
+            Tenancy: "default"
+            SubnetId: "subnet-e465cbac"
+            EbsOptimized: true
+            SecurityGroupIds: 
+              - !Ref EC2SecurityGroup
+            UserData:
+              Fn::Base64: 
+                !Sub |
+                  #!/bin/bash -xe
+                  yum update -y
+                  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+                  . ~/.nvm/nvm.sh
+                  nvm install node
+                  yum -y install httpd
+                  service httpd start
+                  chkconfig httpd on
+
+    ECSInstanceProfile:
+        Type: "AWS::IAM::InstanceProfile"
+        Properties:
+          Path: "/"
+          Roles:
+            - !Ref ECSRole
+
+    ECSRole:
+        Type: "AWS::IAM::Role"
+        Properties:
+          Path: "/"
+          RoleName: !Sub "angular-ec2-role"
+          AssumeRolePolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              -
+                Action: "sts:AssumeRole"
+                Effect: "Allow"
+                Principal:
+                  Service: 
+                    - "ec2.amazonaws.com"
+                    - "batch.amazonaws.com"
+          Policies:
+            - PolicyName: "angular-ec2-full-access"
+              PolicyDocument:
+                Version: "2012-10-17"
+                Statement:
+                  -
+                    Effect: "Allow"
+                    Action:
+                      - "ec2:*"
+                      - "iam:*"
+                      - "logs:CreateLogStream"
+                      - "logs:PutLogEvents"
+                      - "logs:DescribeLogStreams"
+                      - "logs:CreateLogGroup"
+                      - "s3:*"
+                    Resource: "*"

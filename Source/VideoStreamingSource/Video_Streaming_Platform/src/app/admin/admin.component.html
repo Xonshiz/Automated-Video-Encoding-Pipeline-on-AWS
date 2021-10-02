@@ -1,0 +1,13 @@
+﻿<div class="card mt-4">
+    <h4 class="card-header">Admin</h4>
+    <div class="card-body">
+        <label class="btn btn-default">
+            <input type="file" accept=".mp4,.flv,.mkv" (change)="selectFile($event)">
+        </label>
+
+        <button class="btn btn-success" [disabled]="!selectedFiles" (click)="upload()">Upload</button>
+    </div>
+    <label>
+        {{fileUploadMessage}}
+    </label>
+</div>

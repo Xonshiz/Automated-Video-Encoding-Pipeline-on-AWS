@@ -1,0 +1,29 @@
+﻿<div class="card mt-4">
+    <video *ngIf="this.showPlayer" autoplay controls>
+        <source src="{{this.currentStreamKey}}">
+    </video>
+
+    <h4 class="card-header">Home</h4>
+    <div class="videos">
+        <div class="videosGrid">
+            <div class="video collapsible" *ngFor="let bucketObject of this.bucketObjects">
+                <div class="thumbnail">
+                    <a href="#" (click)="toggleCollapsiblePane(bucketObject)">
+                        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?ixlib=rb-1.2.1&auto=format&fit=crop&w=2613&q=80" alt="" />
+                    </a>
+                </div>
+                <div class="details">
+                    <div class="text">
+                        <a href="#" (click)="toggleCollapsiblePane(bucketObject)">
+                            <h3>{{fileTitleCleaner(bucketObject)}}</h3>
+                        </a>
+                    </div>
+                </div>
+                <div class="collapsiblePanel" *ngIf="showCollapsedPanel(bucketObject)">
+                    <li *ngFor="let stream of this.availableStreams">
+                        <button (click)="showStream(stream)">{{stream}}</button>
+                    </li>
+                </div>
+            </div>
+        </div>
+    </div>
