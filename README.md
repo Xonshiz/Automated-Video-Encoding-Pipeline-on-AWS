@@ -22,7 +22,7 @@ These steps are **MOST IMPORTANT** and should be done before running the CloudFo
 - Add **`AWSBatchServiceRole`** policy by following [this guide from AWS](https://docs.aws.amazon.com/batch/latest/userguide/service_IAM_role.html).
 - Add VPC with a public/private subnet by following [this guide from AWS](https://docs.aws.amazon.com/batch/latest/userguide/create-public-private-vpc.html).
 - You'll need to EDIT the "Parameters" section to add the values you will get from following these few previous steps (VPC IDs, Subnets etc.)
-- Install `DOCKER` in your system and follow [this guide to build multi-arch. supported docker images](https://aws.amazon.com/blogs/compute/how-to-quickly-setup-an-experimental-environment-to-run-containers-on-x86-and-aws-graviton2-based-amazon-ec2-instances-effort-to-port-a-container-based-application-from-x86-to-graviton2/). Just follow the tutorial for **`Creating a multi-arch image builder`**.
+- Install `DOCKER` in your system and follow [this guide to build multi-arch. supported docker images](https://aws.amazon.com/blogs/compute/how-to-quickly-setup-an-experimental-environment-to-run-containers-on-x86-and-aws-graviton2-based-amazon-ec2-instances-effort-to-port-a-container-based-application-from-x86-to-graviton2/). Just follow the tutorial for **`Creating a multi-arch image builder`** and once you're done running this architecture via CF template, follow instructions from this same blog but just this part: **`Creating multi-arch images for x86 and Arm64 and push them to Amazon ECR repository`**.
 
 ## Explanation
 Since this task has tons of things to setup, this might be a little lengthy CloudFormation template. So, I'll try to explain few things and add some references where I got few things from.
