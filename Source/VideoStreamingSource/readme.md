@@ -55,5 +55,33 @@ sudo cp -R Video_Streaming_Platform/* /var/www/html/
 
 If everything went fine, you should now be able to access the website via your EC2 instance's public IP.
 
+##### Public S3 Bucket
+You'll need to be able to write and read the object(s) in the S3 bucket. So, as a quick hack to run this POC, I manually made the S3 bucket and its contents to PUBLIC and in CORS section I've added this JSON to allow from any source to do the same.
+**ThiS IS NOT A GOOD PRACTISE**
+````
+
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "HEAD",
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": [
+            "ETag"
+        ]
+    }
+]
+
+````
+
 ### Credits
 I've pulled the rle based authorization angular template from [`Jason Watmore's Github`](https://github.com/cornflourblue/angular-10-role-based-authorization-example). I've used it as a base to show the more "realistic" approach of a streaming website where an "admin" can upload a video and a "user" can only watch the videos. Everything else related to file upload, AWS connections etc. are the things I've implemented. Not the cleanest code, I know, but it works!

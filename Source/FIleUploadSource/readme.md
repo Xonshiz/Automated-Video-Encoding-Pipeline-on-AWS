@@ -64,6 +64,34 @@ sudo cp -R File_Upload_Platform/* /var/www/html/
 
 If everything went fine, you should now be able to access the website via your EC2 instance's public IP.
 
+##### Public S3 Bucket
+You'll need to be able to write and read the object(s) in the S3 bucket. So, as a quick hack to run this POC, I manually made the S3 bucket and its contents to PUBLIC and in CORS section I've added this JSON to allow from any source to do the same.
+**ThiS IS NOT A GOOD PRACTISE**
+````
+
+[
+    {
+        "AllowedHeaders": [
+            "*"
+        ],
+        "AllowedMethods": [
+            "HEAD",
+            "GET",
+            "PUT",
+            "POST",
+            "DELETE"
+        ],
+        "AllowedOrigins": [
+            "*"
+        ],
+        "ExposeHeaders": [
+            "ETag"
+        ]
+    }
+]
+
+````
+
 ##### Adding Event to trigger Lambda Function
 First, download the `index.zip` file from this repository and upload it into the S3 bucket. Remember to update the bucket name in the `file_upload_cf.yaml`.Now, create another stack in CloudFormation with `file_upload_cf.yaml` file.Then go to the lambda function created with this CF tempalte and add a trigger to it. The trigger source would be the `S3` bucket which will have our Outputed encoded file.**Remember to add the prefix of the OUTPUT folder** while creating the trigger, otherwise your lambda function will be triggered for everything you upload in that entire S3 bucket.
 
