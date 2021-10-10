@@ -7,7 +7,7 @@ You can run this setup as is and every time you want to trigger an encode, just 
 
 Whenever you add any object in this folder, there's a Lambda event triggered, which will add a AWS BATCH JOB in the queue, i.e., video encoding process.
 
-You can read more in detail on this particular project on: [https://itsxonshiz.in/?p=339](https://itsxonshiz.in/?p=339)
+You can read more in detail on this particular project on: [Building an automated Video Encoding Pipeline on AWS](https://itsxonshiz.in/?p=339)
 
 ### Must Know!!!
 - Go through "Prerequisites" section before running this template.
