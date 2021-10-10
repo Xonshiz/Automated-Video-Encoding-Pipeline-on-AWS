@@ -1,13 +1,13 @@
-# Graviton2 Based Video Encoding Batch Job
+# Graviton 2 Based Video Encoding Batch Job
 This is a pretty simple and straightforward architecture that gives you the power to build/automate your very own "video encoding" workflow. It's a complete solution in form of CloudFormation template Very little manual setup is required, as mentioned in #Prerequisites section of this readme.
 
-You can configure whatever you want accoridng to your requirements. This setup is focused on using Graviton2 because it offers 40% higher performance at 20% lower cost than its predecessors. Even Netflix uses these processors.
+You can configure whatever you want according to your requirements. This setup is focused on using Graviton2 because it offers 40% higher performance at 20% lower cost than its predecessors. Even Netflix uses these processors.
 
-You can run this setup as is and every time you want to trigger an encode, just upload a valid video file in `Input` "folder" in the S3 bucket created via this template. S3 doesn't have the concept of "Folders/Directories", however, to visualize the data, you can create a "Folder".
+You can run this setup as is and every time you want to trigger an encode, just upload a valid video file in the `Input` "folder" in the S3 bucket created via this template. S3 doesn't have the concept of "Folders/Directories", however, to visualize the data, you can create a "Folder".
 
-Whenever you add any object in this folder, there's a Lambda event triggered, which will add a AWS BATCH JOB in the queue, i.e., video encoding process.
+Whenever you add any object in this folder, there's a Lambda event triggered, which will add an AWS BATCH JOB in the queue, i.e., video encoding process.
 
-You can read more in detail on this particular project on: [Building an automated Video Encoding Pipeline on AWS](https://itsxonshiz.in/?p=339)
+You can read more in detail on this particular project on [Building an automated Video Encoding Pipeline on AWS](https://itsxonshiz.in/?p=339)
 
 ### Must Know!!!
 - Go through "Prerequisites" section before running this template.
