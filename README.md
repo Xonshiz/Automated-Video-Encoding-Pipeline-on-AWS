@@ -30,6 +30,13 @@ Since this task has tons of things to setup, this might be a little lengthy Clou
 - Base CloudFormation template from : [Justin Plute's Medium Blog](https://medium.com/swlh/aws-batch-to-process-s3-events-388a77d0d9c2).
 -  Some more info on setting up an encoding pipeline from [AWS Blog](https://aws.amazon.com/blogs/compute/deploy-an-8k-hevc-pipeline-using-amazon-ec2-p3-instances-with-aws-batch/). Some more ideas from another [AWS Blog](https://aws.amazon.com/blogs/compute/orchestrating-an-application-process-with-aws-batch-using-aws-cloudformation/).
 
+## Architecture
+##### Resource Map generated via "Visual Designer" (AWS CloudFormation)
+![Resource Map](https://github.com/Xonshiz/Automated-Video-Encoding-Pipeline-on-AWS/blob/main/Images/resource_map.png?raw=true)
+
+##### Architecture
+![Architecture Image](https://github.com/Xonshiz/Automated-Video-Encoding-Pipeline-on-AWS/blob/main/Images/architecture.png?raw=true)
+
 #### Metadata Section
 This is a general section to take inputs while setting up this whole job. You can provide the "Environment" name, that'll be prepended in the services spawned via this template. You need to specify the VPC ID and Subnet IDs you got from #Prerequisites section.
 Best way is to put those IDs in the template itself so that you won't have to select the values manually everytime you set it up.
