@@ -18,7 +18,6 @@ from urllib.parse import unquote_plus
 from re import findall, sub
 
 
-
 def path_creator(path_to_create):
     if not path_to_create:
         return path_to_create
@@ -131,7 +130,8 @@ def get_video_codec_command(encode_method, vbv_maxrate):
 
 
 def build_second_pass_ffmpeg_command(encode_type, input_file, options, output_file, current_video_bitrate):
-    command = encode_base_command(input_file, "{0} {1}".format(options, get_video_codec_command(encode_type, current_video_bitrate)),
+    command = encode_base_command(input_file, "{0} {1}".format(options, get_video_codec_command(encode_type,
+                                                                                                current_video_bitrate)),
                                   output_file)
     return command
 
@@ -153,10 +153,10 @@ def remove_resolutions_from_file(file_name):
     if not file_name:
         return ""
     else:
-        return sub(r'\[(\b\d[\d,\s+]*\b)\]', '', str(input_file_key))
+        return sub(r'\[(\b\d[\d,\s+]*\b)\]', '', str(file_name))
         # if matches:
-            # for match in matches:
-            #     file_name = str(file_name).replace(match, '')
+        # for match in matches:
+        #     file_name = str(file_name).replace(match, '')
 
 
 if __name__ == '__main__':
@@ -179,7 +179,7 @@ if __name__ == '__main__':
         if str(input_file_key).lower().strip()[-1] == "/":
             print("Input file is a directory")
             exit(1)
-            
+
         input_file_key = unquote_plus(input_file_key)
         encode_types = []
         encode_type = environ.get("encode_type", None)
@@ -213,8 +213,6 @@ if __name__ == '__main__':
         s3_client = boto3.client('s3')
         downloaded_paths = []
         input_file_name = path.abspath(get_sane_file_name(input_file_key))
-        input_directory = '/'.join(input_file_name.split('/')[:-1])
-        path_creator(input_directory)
 
         file_downloaded = download_file_from_s3(s3_client, input_bucket_name, input_file_key, input_file_name)
         if not file_downloaded:
@@ -238,15 +236,17 @@ if __name__ == '__main__':
                         if video_resolution.lower().strip() != str(video_width):
                             current_options = "-y -vf scale={0}:-2,setsar=1:1".format(video_resolution)
                         input_file_key_simple = str(input_file_key).split('/')[-1]
-                        input_file_key_simple = input_file_key_simple.replace('[x264]', '').replace('[x265]', '').strip()
+                        input_file_key_simple = input_file_key_simple.replace('[x264]', '').replace('[x265]',
+                                                                                                    '').strip()
                         file_name_split = get_sane_file_name(input_file_key_simple).split(".")
                         file_name_split[0] = str(remove_resolutions_from_file(file_name_split[0])).strip()
                         output_directory_name = file_name_split[0] + sep + current_encode_type
                         path_creator(output_directory_name)
-                        downloaded_paths.append(file_name_split[0])
+                        downloaded_paths.append(path.abspath(file_name_split[0]))
                         final_output_name = "{0} [{1}].{2}".format(file_name_split[0], video_resolution,
                                                                    file_name_split[-1])
-                        final_output_name = path.abspath(file_name_split[0] + sep + current_encode_type + sep + final_output_name)
+                        final_output_name = path.abspath(
+                            file_name_split[0] + sep + current_encode_type + sep + final_output_name)
                         current_encode_command = build_second_pass_ffmpeg_command(current_encode_type, input_file_name,
                                                                                   current_options,
                                                                                   final_output_name, video_bitrate)
@@ -257,10 +257,10 @@ if __name__ == '__main__':
                     if len(output_files) > 0:
                         for current_file in output_files:
                             upload_key_name = "Output/{0}/{1}/{2}".format(str(current_file).split('/')[-3],
-                                                               str(current_file).split('/')[-2],
-                                                               str(current_file).split('/')[-1])
+                                                                          str(current_file).split('/')[-2],
+                                                                          str(current_file).split('/')[-1])
                             upload_file_to_s3(s3_client, output_bucket_name, current_file, upload_key_name)
-                            delete_downloaded_resource(set(downloaded_paths))
+                        delete_downloaded_resource(set(downloaded_paths))
         delete_file_from_s3(s3_client, input_bucket_name, input_file_key)
-        delete_downloaded_resource([input_directory])
+        delete_downloaded_resource([input_file_name])
     exit(0)

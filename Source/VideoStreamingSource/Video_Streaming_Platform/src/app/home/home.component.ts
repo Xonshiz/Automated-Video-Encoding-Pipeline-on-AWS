@@ -65,7 +65,12 @@ export class HomeComponent {
     getResolutionFromTitle(Key: string) {
         var final = "1080";
         var splitHolder = Key?.split(' ');
-        final = splitHolder[splitHolder.length - 1].split('.')[0]?.replace('[', '').replace(']', '').trim();
+        if(Key?.indexOf("/x264/") > -1){
+            final = "x264 - ";
+        } else if (Key?.indexOf("/x265/") > -1){
+            final = "x265 - ";
+        }
+        final += splitHolder[splitHolder.length - 1].split('.')[0]?.replace('[', '').replace(']', '').trim();
         return final;
     }
 
@@ -91,7 +96,7 @@ export class HomeComponent {
         }
         var name_split = name.split('_');
         name = name_split[name_split.length - 1];
-        return name.split('.')[0].replace( new RegExp("\[(0-9)+\]","gm"),"").replace(/[x]/g, '').replace(/\[\]/g, '').replace(/[,]/g, '').trim();
+        return name?.split('/')[name?.split('/').length - 1]?.split('.')[0].replace( new RegExp("\[(0-9)+\]","gm"),"").replace(/[x]/g, '').replace(/\[\]/g, '').replace(/[,]/g, '').trim();
     }
 
     async getStreamableUrl(bucketObject: any){
