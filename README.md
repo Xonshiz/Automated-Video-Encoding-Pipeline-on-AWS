@@ -10,18 +10,18 @@ Whenever you add any object in this folder, there's a Lambda event triggered, wh
 You can read more in detail on this particular project on [Building an automated Video Encoding Pipeline on AWS](https://itsxonshiz.in/?p=339)
 
 ### Must Know!!!
-- Go through "Prerequisites" section before running this template.
+- Go through the "Prerequisites" section before running this template.
 - Once you're done launching this template, you'll need to create a "Folder" named "input".
 - Once your input video is processed, it's deleted from the "input" folder. So, the source video will be gone. This is done to regulate storage prices. If you wish to remove this functionality, edit the python script before building the docker image.
 - You can decide whether to encode in "x264" or "x265" by adding "[x264]" or "[x265]" in the file name. If you don't provide any of these, then "x264" is taken by default.
-- You can also specify "[x264] [x265]" in the same file name if you want to trigger both the encode types.
-- By default it'll create "1920" wide resoulution encode. If you want multiple reslutions, then you can add [1920,1280,640] (for multiple resolutions encodes) or [1920] (for single resolution encode) in the file name. Encode script will automatically scale the video properly. Just provide `width` value.
+- You can also specify "[x264] [x265]" in the same file name if you want to trigger both the encoding types.
+- By default, it'll create a "1920" wide resolution encode. If you want multiple resolutions, then you can add [1920,1280,640] (for multiple resolutions encodes) or [1920] (for single resolution encode) in the file name. Encode script will automatically scale the video properly. Just provide `width` value.
 
 ### Prerequisites
-These steps are **MOST IMPORTANT** and should be done before running the CloudFormation template, othwewise you **will** run into [problems](https://stackoverflow.com/questions/69241422/user-batch-amazonaws-com-is-not-authorized-to-perform-stsassumerole-on-resour).
+These steps are **MOST IMPORTANT** and should be done before running the CloudFormation template, otherwise, you **will** run into [problems](https://stackoverflow.com/questions/69241422/user-batch-amazonaws-com-is-not-authorized-to-perform-stsassumerole-on-resour).
 - Add **`AWSBatchServiceRole`** policy by following [this guide from AWS](https://docs.aws.amazon.com/batch/latest/userguide/service_IAM_role.html).
 - Add VPC with a public/private subnet by following [this guide from AWS](https://docs.aws.amazon.com/batch/latest/userguide/create-public-private-vpc.html).
-- You'll need to EDIT the "Parameters" section to add the values you will get from following these few previous steps (VPC IDs, Subnets etc.)
+- You'll need to EDIT the "Parameters" section to add the values you will get from following these few previous steps (VPC IDs, Subnets, etc.)
 - Install `DOCKER` in your system and follow [this guide to build multi-arch. supported docker images](https://aws.amazon.com/blogs/compute/how-to-quickly-setup-an-experimental-environment-to-run-containers-on-x86-and-aws-graviton2-based-amazon-ec2-instances-effort-to-port-a-container-based-application-from-x86-to-graviton2/). Just follow the tutorial for **`Creating a multi-arch image builder`** and once you're done running this architecture via CF template, follow instructions from this same blog but just this part: **`Creating multi-arch images for x86 and Arm64 and push them to Amazon ECR repository`**.
 
 ## Explanation
